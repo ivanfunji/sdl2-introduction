@@ -1,6 +1,7 @@
 #include <stdio.h>
-#include <SDL2/SDL.h>
 #include <stdlib.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 
 // Initialize SDL
 bool init();
@@ -20,6 +21,8 @@ enum SURFACES {
 	SURFACE_2,
 	SURFACE_3,
 	SURFACE_4,
+	SURFACE_5,
+	SURFACE_6,
 	SURFACE_TOTAL
 };
 
@@ -101,6 +104,12 @@ bool init() {
 		printf("Could not create the window SDL_Error: %s\n", SDL_GetError());
 		return false;
 	}
+
+	if ( !(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG) ) {
+		printf("SDL_image could not initialize SDL_Image Error: %s\n", IMG_GetError());
+		return false;
+	}
+
 	screenSurface = SDL_GetWindowSurface(window);
 	return true;
 }
@@ -111,11 +120,15 @@ bool loadMedia() {
 	keyPressSurfaces[SURFACE_2] = loadImageSurface("file_images/chevalier.bmp");
 	keyPressSurfaces[SURFACE_3] = loadImageSurface("file_images/download.bmp");
 	keyPressSurfaces[SURFACE_4] = loadImageSurface("file_images/onemore.bmp");
+	keyPressSurfaces[SURFACE_5] = loadImageSurface("file_images/nature.png");
+	keyPressSurfaces[SURFACE_6] = loadImageSurface("file_images/picture.jpeg");
 	return true;
 }
 
 SDL_Surface* loadImageSurface(char *path) {
-	SDL_Surface *imageSurface = SDL_LoadBMP( path );
+	SDL_Surface *imageSurface = IMG_Load( path );
+	//SDL_Surface *imageSurface = SDL_LoadBMP( path );
+
 	SDL_Surface *optimizedSurface = NULL;
 
 	if (imageSurface == NULL) {
