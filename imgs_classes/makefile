@@ -1,0 +1,8 @@
+CC = g++
+INFILES = main.cpp
+OUTFILES = main.out
+COMPILER_FLAGS = -W
+LINKER_FLAGS = -lSDL2 -lSDL2_image
+
+all:
+	$(CC) $(INFILES) $(COMPILER_FLAGS) $(LINKER_FLAGS) -o $(OUTFILES)
